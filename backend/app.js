@@ -26,17 +26,20 @@ const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => { 
   if (req.url === "/customer_login"){ //This checks if the request is for the customer_login page
-    if(req.method === "POST"){
+    if(req.url === "/customer_login" && req.method === "POST")
+    {
+      console.log(req.url, req.method);
       c_login(req,res,connection);
     }
 
     else{
+    console.log(req.url, req.method);
      res.end(html)
     }
   }
 
   else if (req.url === "/customer_signup"){ //This checks if the request is for the customer_signup page
-    if(req.method === "POST"){
+    if(req.url === "/customer_signup" && req.method === "POST"){
       c_signup(req,res,connection);
     }
   }
