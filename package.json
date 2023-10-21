@@ -1,0 +1,20 @@
+{
+  "name": "project_final",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --inspect -e js,html,hbs,sql,css,scss app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "mime-types": "^2.1.35",
+    "mysql2": "^3.6.2"
+  }
+}
