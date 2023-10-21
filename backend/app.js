@@ -3,6 +3,7 @@ const fs = require('fs');
 const mysql = require('mysql2');
 const c_login = require('./c_login.js');
 const c_signup = require('./c_signup.js');
+const html = fs.readFileSync('./frontend/log.html');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -24,10 +25,16 @@ if (error) {
 const port = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => { 
+
   if (req.url === "/customer_login"){ //This checks if the request is for the customer_login page
     if(req.method === "POST"){
       c_login(req,res,connection);
     }
+
+    else{
+      res.end(html);
+    }
+    
   }
 
   else if (req.url === "/customer_signup"){ //This checks if the request is for the customer_signup page
