@@ -1,4 +1,5 @@
 // Description: This file is used to handle the login request from the client.
+
 module.exports = function(req,res,connection){
     var jsonString = '';
       try{ //This try-catch block is used to catch any errors that may occur
@@ -19,11 +20,13 @@ module.exports = function(req,res,connection){
             if (err) throw err;
         
             if (result.length > 0) { //This checks if the query returned any results
-                res.end(JSON.stringify({ message: 'Login successful' })); //This sends a response to the client and convert the JSON object to a string
+              const token = jwt.sign({ customer_id: result.customer_id }, SECRET_KEY, { expiresIn: '2h' }); //This signs a JWT token with the customer_id and the secret key
+              res.setHeader('Authorization', `Bearer ${token}`);
+              res.end(JSON.stringify({ message: 'Login successful', token }));
             } 
             else {
-                res.end(JSON.stringify({ message: 'Login failed' }));
-            }
+              res.end(JSON.stringify({ message: 'Login failed' })); 
+            } 
           });
         });
       }
