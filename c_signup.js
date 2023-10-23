@@ -11,7 +11,7 @@ async function doesExist(connection, query, params) { //This function checks if 
     });
 }
 
-function executeQuery(connection, query, params, res, successMessage) {
+function executeQuery(connection, query, params, res, successMessage) { //Since connection.query doesn't return a promise, we have to wrap it in a promise
     return new Promise((resolve, reject) => {
         connection.query(query, params, (err, result) => {
             if (err) {
