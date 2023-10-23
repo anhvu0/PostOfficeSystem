@@ -1,4 +1,6 @@
 // Description: This file is used to handle the login request from the client.
+const jwt = require('jsonwebtoken');
+const SECRET_KEY = '3380team3' //This is the secret key used to sign the JWT (important)
 
 module.exports = function(req,res,connection){
     var jsonString = '';
@@ -20,7 +22,7 @@ module.exports = function(req,res,connection){
             if (err) throw err;
         
             if (result.length > 0) { //This checks if the query returned any results
-              const token = jwt.sign({ customer_id: result.customer_id }, SECRET_KEY, { expiresIn: '2h' }); //This signs a JWT token with the customer_id and the secret key
+              const token = jwt.sign({ customer_id: result.customers_id }, SECRET_KEY, { expiresIn: '2h' }); //This signs a JWT token with the customer_id and the secret key
               res.setHeader('Authorization', `Bearer ${token}`);
               res.end(JSON.stringify({ message: 'Login successful', token }));
             } 

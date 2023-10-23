@@ -1,15 +1,12 @@
+
 const http = require('http');
 const fs = require('fs');
 const mysql = require('mysql2');
 const c_login = require('./c_login.js');
 const c_signup = require('./c_signup.js');
-const html_c_login = fs.readFileSync('./frontend/log.html');
+const c_login_page = fs.readFileSync('./frontend/src/customer_handle/loginpage.jsx');
 const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
-
-
-const secretKey = '3380team3' //This is the secret key used to sign the JWT (important)
-
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -30,7 +27,10 @@ if (error) {
 
 const port = process.env.PORT || 3000;
 
-const server = http.createServer((req, res) => { 
+const server = http.createServer((req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); //This allows request to be sent from react called CORS
 
   const incomingToken = req.headers.authorization?.split(' ')[1]; //This checks for any incoming tokens
   if (incomingToken) {
@@ -49,8 +49,8 @@ const server = http.createServer((req, res) => {
       c_login(req,res,connection);
     }
 
-    else{
-      res.end(html_c_login);
+    else if(req.method === "GET"){
+      res.end(c_login_page);
     }
   }
 
