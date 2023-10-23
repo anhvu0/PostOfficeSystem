@@ -65,11 +65,11 @@ const server = http.createServer((req, res) => {
 
   else if (req.url === "/customer_packages"){
     if(req.method === "GET"){
-      customer_packages(req,res,connection, customerId);
+      customer_packages(req,res,connection, 12982328);
     }
 
     else {
-      res.end(html_c_signup)
+      res.end(html_c_login) //*Need to fix this */
     }
   }
 

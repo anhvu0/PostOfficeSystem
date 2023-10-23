@@ -1,7 +1,4 @@
 // Description: This file is used to handle the login request from the client.
-const jwt = require('jsonwebtoken');
-
-const secretKey = '3380team3' //This is the secret key used to sign the JWT (important)
 
 module.exports = function(req,res,connection){
     var jsonString = '';
