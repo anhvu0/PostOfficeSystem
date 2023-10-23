@@ -7,7 +7,9 @@ const html_c_login = fs.readFileSync('./frontend/log.html');
 const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
 
+
 const secretKey = '3380team3' //This is the secret key used to sign the JWT (important)
+
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -50,7 +52,6 @@ const server = http.createServer((req, res) => {
     else{
       res.end(html_c_login);
     }
-    
   }
 
   else if (req.url === "/customer_signup"){ //This checks if the request is for the customer_signup page
@@ -65,7 +66,7 @@ const server = http.createServer((req, res) => {
 
   else if (req.url === "/customer_packages"){
     if(req.method === "GET"){
-      customer_packages(req,res,connection, 12982328);
+      customer_packages(req,res,connection, customerID);
     }
 
     else {
