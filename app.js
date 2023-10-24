@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
 const main_page = fs.readFileSync('./frontend/src/main_page/mainpage.jsx');
 const c_mainpage = fs.readFileSync('./frontend/src/main_page/c_mainpage.jsx');
+const c_packages = fs.readFileSync('./frontend/src/customer_handle/customer_packages.jsx');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -72,7 +73,7 @@ const server = http.createServer((req, res) => {
     }
 
     else {
-      res.end(html_c_login) //*Need to fix this */
+      res.end(c_packages) //*Need to fix this */
     }
   }
 

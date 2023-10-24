@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginForm from './customer_handle/loginpage.jsx';
 import MainPage from './main_page/mainpage.jsx';
 import CustomerMainPage from './main_page/c_mainpage.jsx'
+import DataTable from './customer_handle/customer_packages.jsx';
 
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/customer_login" element={<LoginForm/>} />
         <Route exact path="/" element={<MainPage/>} />
         <Route exact path="/customer_mainpage" element={<CustomerMainPage/>} />
+        <Route exact path="/customer_packages" element={<DataTable/>} />
       </Routes>
     </Router>
   );
