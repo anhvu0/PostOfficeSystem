@@ -7,6 +7,7 @@ const c_signup = require('./c_signup.js');
 const c_login_page = fs.readFileSync('./frontend/src/customer_handle/loginpage.jsx');
 const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
+const main_page = fs.readFileSync('./frontend/src/customer_handle/mainpage.jsx');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -75,9 +76,7 @@ const server = http.createServer((req, res) => {
   }
 
   else{
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.write('Hello World \n');
-    res.end()
+    res.end(main_page);
   }
 });
 
