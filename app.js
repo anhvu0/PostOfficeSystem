@@ -11,8 +11,8 @@ const customer_packages = require('./customer_packages.js');
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Vietnamese123',
-  database: 'PostOffice'
+  password: 'P@ssek0i',
+  database: 'postoffce'
 });
 // connect to the MySQL database
 connection.connect((error) => {
