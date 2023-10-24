@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+import { useNavigate } from 'react-router-dom';
+
+
 const LoginForm = () => {
+
+    const navigate = useNavigate(); // useNavigate hook to navigate to other pages
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -15,7 +21,12 @@ const LoginForm = () => {
     // Axios POST request
     await axios.post('http://localhost:3000/customer_login', loginData)
       .then((response) => {
-        alert(response.data.message);
+        if (response.data.status === true){
+            navigate('/customer_mainpage'); // navigate to customer_mainpage
+        }
+        else{
+            alert("Login failed. Please try again.");
+        }
       })
       .catch((error) => {
         console.error(error);

@@ -7,7 +7,8 @@ const c_signup = require('./c_signup.js');
 const c_login_page = fs.readFileSync('./frontend/src/customer_handle/loginpage.jsx');
 const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
-const main_page = fs.readFileSync('./frontend/src/customer_handle/mainpage.jsx');
+const main_page = fs.readFileSync('./frontend/src/main_page/mainpage.jsx');
+const c_mainpage = fs.readFileSync('./frontend/src/main_page/c_mainpage.jsx');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -73,6 +74,10 @@ const server = http.createServer((req, res) => {
     else {
       res.end(html_c_login) //*Need to fix this */
     }
+  }
+
+  else if (req.url === "/customer_mainpage"){
+    res.end(c_mainpage);
   }
 
   else{

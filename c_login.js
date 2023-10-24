@@ -24,10 +24,10 @@ module.exports = function(req,res,connection){
             if (result.length > 0) { //This checks if the query returned any results
               const token = jwt.sign({ customer_id: result.customers_id }, SECRET_KEY, { expiresIn: '2h' }); //This signs a JWT token with the customer_id and the secret key
               res.setHeader('Authorization', `Bearer ${token}`);
-              res.end(JSON.stringify({ message: 'Login successful', token }));
+              res.end(JSON.stringify({ message: 'Login successful', status:true, token }));
             } 
             else {
-              res.end(JSON.stringify({ message: 'Login failed' })); 
+              res.end(JSON.stringify({ message: 'Login failed, check your username and password again.' })); 
             } 
           });
         });
