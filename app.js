@@ -49,7 +49,7 @@ const server = http.createServer((req, res) => {
       c_login(req,res,connection);
     }
 
-    else if(req.method === "GET"){
+    else {
       res.end(c_login_page);
     }
   }

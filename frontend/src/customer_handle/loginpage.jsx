@@ -13,7 +13,7 @@ const LoginForm = () => {
     };
 
     // Axios POST request
-    axios.post('http://localhost:3000/customer_login', loginData)
+    await axios.post('http://localhost:3000/customer_login', loginData)
       .then((response) => {
         alert(response.data.message);
       })
