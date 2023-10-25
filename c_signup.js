@@ -11,15 +11,13 @@ async function doesExist(connection, query, params) { //This function checks if 
     });
 }
 
-function executeQuery(connection, query, params, res, successMessage) { //Since connection.query doesn't return a promise, we have to wrap it in a promise
+function executeQuery(connection, query, params, res) { //Since connection.query doesn't return a promise, we have to wrap it in a promise
     return new Promise((resolve, reject) => {
         connection.query(query, params, (err, result) => {
             if (err) {
                 reject(err);
-                res.end(JSON.stringify({message: "An error occurred"}));
             } else {
                 resolve(result);
-                res.end(JSON.stringify({message: successMessage}));
             }
         });
     });
@@ -74,14 +72,23 @@ module.exports = async function(req,res,connection){
                 }
             }
 
+            while(exists) {
+                exists = await doesExist(connection, 'SELECT street_address, state, city, zip FROM address WHERE street_address = ? AND state = ? AND city = ? AND zip = ?', 
+                [parsedData.street_address, parsedData.state, parsedData.city, parsedData.zip_code]);
+                if(exists === true){
+                    res.end(JSON.stringify({message: "Address already existed"}));
+                    return;
+                }
+            }
+
             //Insert data without address_id due to CONSTRAINTS FOREIGN KEY
             const query1 = `INSERT INTO customers(customers_id, Fname, Lname, c_username, c_password, dob) VALUES(?, ?, ?, ?, ?, ?);`; 
             const params1 = [customer_id, parsedData.first_name, parsedData.last_name, parsedData.username, parsedData.password, parsedData.date_of_birth];
 
             await executeQuery(connection, query1, params1, res, "Customer's information updated successfully");
 
-            const query2 =`INSERT INTO address(address_id, street_address, state, city, zip, customers_id) VALUES(?, ?, ?, ?, ?, ?);`;
-            const params2 = [address_id, parsedData.street_address, parsedData.state, parsedData.city, parsedData.zip_code, customer_id];
+            const query2 =`INSERT INTO address(address_id, street_address, state, city, zip) VALUES(?, ?, ?, ?, ?);`;
+            const params2 = [address_id, parsedData.street_address, parsedData.state, parsedData.city, parsedData.zip_code];
 
             await executeQuery(connection, query2, params2, res, "Address information updated successfully");
 
@@ -89,7 +96,9 @@ module.exports = async function(req,res,connection){
             const query3 = `UPDATE customers SET address_id = ? WHERE customers_id = ?;`;
             const params3 = [address_id, customer_id];
 
-            await executeQuery(connection, query3, params3, res, "Address information updated successfully");
+            await executeQuery(connection, query3, params3, res, "All information updated successfully");
+
+            res.end(JSON.stringify({message: "Your information has been updated successfully"}));
         });
     }
     catch(error){

@@ -2,6 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginForm from './customer_handle/loginpage.jsx';
+import RegistrationForm from './customer_handle/sgnup.jsx';
 import MainPage from './main_page/mainpage.jsx';
 import CustomerMainPage from './main_page/c_mainpage.jsx'
 import DataTable from './customer_handle/customer_packages.jsx';
@@ -15,6 +16,7 @@ function App() {
         <Route exact path="/" element={<MainPage/>} />
         <Route exact path="/customer_mainpage" element={<CustomerMainPage/>} />
         <Route exact path="/customer_packages" element={<DataTable/>} />
+        <Route exact path="/customer_signup" element={<RegistrationForm/>} />
       </Routes>
     </Router>
   );
