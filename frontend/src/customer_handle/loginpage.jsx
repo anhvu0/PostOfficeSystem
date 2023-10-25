@@ -23,6 +23,7 @@ const LoginForm = () => {
       .then((response) => {
         if (response.data.status === true){
             localStorage.setItem('token', response.data.token); // store token in local storage
+            alert(response.data.message);
             navigate('/customer_mainpage'); // navigate to customer_mainpage
         }
         else{

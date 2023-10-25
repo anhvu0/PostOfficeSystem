@@ -33,14 +33,22 @@ const port = process.env.PORT || 3000;
 const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); //This allows request to be sent from react called CORS
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization'); //This allows request to be sent from react called CORS
 
-  const customerId = null;
+  if (req.method === 'OPTIONS') {
+    res.writeHead(200);
+    res.end();
+    return;
+  }
+
+  let customerId = null;
+
+  const SECRET_KEY = '3380team3' //This is the secret key used to sign the JWT (important)
 
   const incomingToken = req.headers.authorization?.split(' ')[1]; //This checks for any incoming tokens
   if (incomingToken) {
     try {
-      const decoded = jwt.verify(incomingToken, SECRET_KEY);
+      let decoded = jwt.verify(incomingToken, SECRET_KEY);
       customerId = decoded.customers_id; //Store the customers_id in the token into the customerID variable
       // Now use customer_id in your SQL queries to check for packages, etc.
     } catch (err) {
