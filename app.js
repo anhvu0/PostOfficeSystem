@@ -4,6 +4,7 @@ const fs = require('fs');
 const mysql = require('mysql2');
 const c_login = require('./c_login.js');
 const c_signup = require('./c_signup.js');
+const c_signuppage = fs.readFileSync('./frontend/src/customer_handle/sgnup.jsx');
 const c_login_page = fs.readFileSync('./frontend/src/customer_handle/loginpage.jsx');
 const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
@@ -60,7 +61,7 @@ const server = http.createServer((req, res) => {
     }
 
     else {
-      res.end(html_c_signup)
+      res.end(c_signuppage)
     }
   }
 
