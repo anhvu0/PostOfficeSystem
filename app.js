@@ -35,11 +35,13 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type'); //This allows request to be sent from react called CORS
 
+  const customerId = null;
+
   const incomingToken = req.headers.authorization?.split(' ')[1]; //This checks for any incoming tokens
   if (incomingToken) {
     try {
       const decoded = jwt.verify(incomingToken, SECRET_KEY);
-      const customerId = decoded.customer_id; //Store the customer_id in the token into the customerID variable
+      customerId = decoded.customers_id; //Store the customers_id in the token into the customerID variable
       // Now use customer_id in your SQL queries to check for packages, etc.
     } catch (err) {
       res.end('Invalid or expired token');
@@ -69,11 +71,11 @@ const server = http.createServer((req, res) => {
 
   else if (req.url === "/customer_packages"){
     if(req.method === "GET"){
-      customer_packages(req,res,connection, customerID);
+      customer_packages(req,res,connection, customerId);
     }
 
     else {
-      res.end(c_packages) //*Need to fix this */
+      res.end(c_packages);
     }
   }
 

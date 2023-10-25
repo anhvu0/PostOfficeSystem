@@ -22,6 +22,7 @@ const LoginForm = () => {
     await axios.post('http://localhost:3000/customer_login', loginData)
       .then((response) => {
         if (response.data.status === true){
+            localStorage.setItem('token', response.data.token); // store token in local storage
             navigate('/customer_mainpage'); // navigate to customer_mainpage
         }
         else{

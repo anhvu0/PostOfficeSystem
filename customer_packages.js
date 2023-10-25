@@ -1,7 +1,7 @@
-module.exports = function(req, res, connection, customerID){
+module.exports = function(req, res, connection, customerId){
 
     const query = 'SELECT p.packages_id, Fname, Lname, package_status FROM packages AS p JOIN customers AS c ON p.customers_send_id = c.customer_id WHERE c.customer_id = ?';
-    const params = [customerID];
+    const params = [customerId];
 
     connection.query(query, params, (err, result) => { //This sends the query to the database
         if (err) throw err;
