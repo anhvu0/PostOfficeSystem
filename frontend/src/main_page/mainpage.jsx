@@ -12,6 +12,9 @@ const MainPage = () => {
             <div>
                 <Button variant="primary" as={Link} to={"/customer_signup"}>Or click here to sign up</Button>
             </div>
+            <div>
+                <Button variant="primary" as={Link} to={"/employee_login"}>Employee signs in here</Button>
+            </div>
         </div>
     );
 }

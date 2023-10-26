@@ -10,6 +10,9 @@ const customer_packages = require('./customer_packages.js');
 const main_page = fs.readFileSync('./frontend/src/main_page/mainpage.jsx');
 const c_mainpage = fs.readFileSync('./frontend/src/main_page/c_mainpage.jsx');
 const c_packages = fs.readFileSync('./frontend/src/customer_handle/customer_packages.jsx');
+const e_login = require('./e_login.js');
+const e_login_page = fs.readFileSync('./frontend/src/employee_handle/e_loginpage.jsx');
+const e_mainpage = fs.readFileSync('./frontend/src/main_page/e_mainpage.jsx');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -42,6 +45,7 @@ const server = http.createServer((req, res) => {
   }
 
   let customerId = null;
+  let employeeId = null;
 
   const SECRET_KEY = '3380team3' //This is the secret key used to sign the JWT (important)
 
@@ -49,8 +53,13 @@ const server = http.createServer((req, res) => {
   if (incomingToken) {
     try {
       let decoded = jwt.verify(incomingToken, SECRET_KEY);
-      customerId = decoded.customers_id; //Store the customers_id in the token into the customerID variable
-      // Now use customer_id in your SQL queries to check for packages, etc.
+      if(decoded.employeeId){
+        customerId = decoded.customers_id;//Store the customers_id in the token into the customerID variable
+        // Now use customer_id in your SQL queries to check for packages, etc.
+       }
+      else {
+        employeeId = decoded.employees_id;
+      } 
     } catch (err) {
       res.end('Invalid or expired token');
     }
@@ -89,6 +98,19 @@ const server = http.createServer((req, res) => {
 
   else if (req.url === "/customer_mainpage"){
     res.end(c_mainpage);
+  }
+
+  else if (req.url === "/employee_login"){
+    if(req.method === "POST"){
+      e_login(req,res,connection);
+    }
+    else{
+      res.end(e_login_page);
+    }
+  }
+
+  else if (req.url === "/employee_mainpage"){
+    res.end(e_mainpage);
   }
 
   else{
