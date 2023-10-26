@@ -8,6 +8,7 @@ import CustomerMainPage from './main_page/c_mainpage.jsx'
 import DataTable from './customer_handle/customer_packages.jsx';
 import ELoginForm from './employee_handle/e_loginpage.jsx';
 import EmployeeMainPage from './main_page/e_mainpage.jsx';
+import CreatePackageForm from './customer_handle/c_create_package_page.jsx';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route exact path="/customer_signup" element={<RegistrationForm/>} />
         <Route exact path="/employee_login" element={<ELoginForm/>} />
         <Route exact path="/employee_mainpage" element={<EmployeeMainPage/>} />
+        <Route exact path="/customer_create_package" element={<CreatePackageForm/>} />
       </Routes>
     </Router>
   );

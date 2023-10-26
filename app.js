@@ -11,8 +11,10 @@ const main_page = fs.readFileSync('./frontend/src/main_page/mainpage.jsx');
 const c_mainpage = fs.readFileSync('./frontend/src/main_page/c_mainpage.jsx');
 const c_packages = fs.readFileSync('./frontend/src/customer_handle/customer_packages.jsx');
 const e_login = require('./e_login.js');
+const c_create_package = require('./c_create_package.js');
 const e_login_page = fs.readFileSync('./frontend/src/employee_handle/e_loginpage.jsx');
 const e_mainpage = fs.readFileSync('./frontend/src/main_page/e_mainpage.jsx');
+const c_create_package_page = fs.readFileSync('./frontend/src/customer_handle/c_create_package_page.jsx');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -53,11 +55,11 @@ const server = http.createServer((req, res) => {
   if (incomingToken) {
     try {
       let decoded = jwt.verify(incomingToken, SECRET_KEY);
-      if(decoded.employeeId){
+      if(decoded.customers_id){
         customerId = decoded.customers_id;//Store the customers_id in the token into the customerID variable
         // Now use customer_id in your SQL queries to check for packages, etc.
        }
-      else {
+      else if (decoded.employees_id) {
         employeeId = decoded.employees_id;
       } 
     } catch (err) {
@@ -93,6 +95,15 @@ const server = http.createServer((req, res) => {
 
     else {
       res.end(c_packages);
+    }
+  }
+
+  else if (req.url === "/customer_create_package"){
+    if(req.method === "POST"){
+      c_create_package(req,res,connection,customerId);
+    }
+    else {
+      res.end(c_create_package_page);
     }
   }
 
