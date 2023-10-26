@@ -7,7 +7,6 @@ module.exports = function(req, res, connection, customerId){
         if (err) throw err;
     
         if (result.length > 0) { //This checks if the query returned any results
-            console.log("Sending response:", JSON.stringify(result));
             res.end(JSON.stringify(result));
         } 
         else {

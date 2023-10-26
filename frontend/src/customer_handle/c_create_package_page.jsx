@@ -41,7 +41,7 @@ const CreatePackageForm = () => {
       .then((response) => {
         console.log(response.data);
         alert(response.data.message);
-        navigate('/customer_create_package')
+        navigate('/customer_mainpage')
       })
       .catch((error) => {
         console.error(error);
