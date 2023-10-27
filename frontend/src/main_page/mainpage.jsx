@@ -15,6 +15,10 @@ const MainPage = () => {
             <div>
                 <Button variant="primary" as={Link} to={"/employee_login"}>Employee signs in here</Button>
             </div>
+            <div></div>
+            <div>
+                <Button variant="primary" as={Link} to={"/create_package"}>Creating your own package!</Button>
+            </div>
         </div>
     );
 }

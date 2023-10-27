@@ -15,6 +15,7 @@ const c_create_package = require('./c_create_package.js');
 const e_login_page = fs.readFileSync('./frontend/src/employee_handle/e_loginpage.jsx');
 const e_mainpage = fs.readFileSync('./frontend/src/main_page/e_mainpage.jsx');
 const c_create_package_page = fs.readFileSync('./frontend/src/customer_handle/c_create_package_page.jsx');
+const general_create_package = require('./general_create_package.js');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -122,6 +123,15 @@ const server = http.createServer((req, res) => {
 
   else if (req.url === "/employee_mainpage"){
     res.end(e_mainpage);
+  }
+
+  else if (req.url === "/create_package"){
+    if(req.method === "POST"){
+      general_create_package(req,res,connection);
+    }
+    else{
+      res.end(general_create_package_page);
+    }
   }
 
   else{
