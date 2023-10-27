@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './DataTable.css';  // Importing the CSS
 
 const DataTable = () => {
-  // Step 2: Initialize state
   const [tableData, setTableData] = useState([]);
 
-  // Step 1: Fetch data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token'); //This is where you get the token from localStorage
+        const token = localStorage.getItem('token');
         const response = await axios.get('http://localhost:3000/customer_packages', {headers : {'Authorization': `Bearer ${token}`}})
         if(!response.data.message){
             setTableData(response.data);
@@ -22,28 +21,29 @@ const DataTable = () => {
     fetchData();
   }, []);
 
-  // Step 3: Render table
   return (
-    <table style={{ borderCollapse: 'separate', borderSpacing: '15px', border: '1px solid black' }}>
-    <thead>
-        <tr>
-        <th style={{ border: '1px solid black' }}>Package ID</th>
-        <th style={{ border: '1px solid black' }}>Sender</th>
-        <th style={{ border: '1px solid black' }}>Receiver</th>
-        <th style={{ border: '1px solid black' }}>Status</th>
-        </tr>
-    </thead>
-      <tbody>
-        {tableData.map((tableData) => (
-          <tr key={tableData.packages_id}>
-            <td>{tableData.packages_id}</td>
-            <td>{tableData.sender}</td>
-            <td>{tableData.receiver}</td>
-            <td>{tableData.package_status}</td>
+    <div className="container mt-5">
+      <table className="table table-hover">
+        <thead className="thead-dark">
+          <tr>
+            <th>Package ID</th>
+            <th>Sender</th>
+            <th>Receiver</th>
+            <th>Status</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {tableData.map((row, index) => (
+            <tr key={row.packages_id}>
+              <td>{row.packages_id}</td>
+              <td>{row.sender}</td>
+              <td>{row.receiver}</td>
+              <td>{row.package_status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

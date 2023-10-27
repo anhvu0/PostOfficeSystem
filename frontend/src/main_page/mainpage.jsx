@@ -1,23 +1,28 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
+import { FaUser, FaUserPlus, FaUserTie, FaBoxOpen, FaSearch } from "react-icons/fa"; // import icons
 
 const MainPage = () => {
     return (
-        <div>
-            <h1>Welcome To The Post Office System</h1>
-            <div>
-                <Button variant="primary" as={Link} to={"/customer_login"}>Customer signs in here</Button>
-            </div>
-            <div>
-                <Button variant="primary" as={Link} to={"/customer_signup"}>Or click here to sign up</Button>
-            </div>
-            <div>
-                <Button variant="primary" as={Link} to={"/employee_login"}>Employee signs in here</Button>
-            </div>
-            <div></div>
-            <div>
-                <Button variant="primary" as={Link} to={"/create_package"}>Creating your own package!</Button>
+        <div className="d-flex flex-column align-items-center vh-100 justify-content-center bg-secondary text-white">
+            <h1 className="mb-4 display-3 font-weight-bold">Post Office System</h1>
+            <div className="bg-light text-dark rounded p-4 shadow-lg">
+                <div className="mb-3">
+                    <Button variant="outline-dark" as={Link} to={"/customer_login"}><FaUser /> Customer Login</Button>
+                </div>
+                <div className="mb-3">
+                    <Button variant="outline-dark" as={Link} to={"/customer_signup"}><FaUserPlus /> Sign Up</Button>
+                </div>
+                <div className="mb-3">
+                    <Button variant="outline-dark" as={Link} to={"/employee_login"}><FaUserTie /> Employee Login</Button>
+                </div>
+                <div className="mb-3">
+                    <Button variant="outline-dark" as={Link} to={"/create_package"}><FaBoxOpen /> Create Package</Button>
+                </div>
+                <div className="mb-3">
+                    <Button variant="outline-dark" as={Link} to={"/track_package"}><FaSearch /> Track Package</Button>
+                </div>
             </div>
         </div>
     );

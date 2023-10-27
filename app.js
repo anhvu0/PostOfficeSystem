@@ -8,7 +8,7 @@ const c_login_page = fs.readFileSync('./frontend/src/customer_handle/loginpage.j
 const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
 const main_page = fs.readFileSync('./frontend/src/main_page/mainpage.jsx');
-const c_mainpage = fs.readFileSync('./frontend/src/main_page/c_mainpage.jsx');
+const c_mainpage = fs.readFileSync('./frontend/src/main_page/c_mainpage.jsx'); //Files like this doesnt have to be included since they are handled in App.js already
 const c_packages = fs.readFileSync('./frontend/src/customer_handle/customer_packages.jsx');
 const e_login = require('./e_login.js');
 const c_create_package = require('./c_create_package.js');
@@ -16,6 +16,8 @@ const e_login_page = fs.readFileSync('./frontend/src/employee_handle/e_loginpage
 const e_mainpage = fs.readFileSync('./frontend/src/main_page/e_mainpage.jsx');
 const c_create_package_page = fs.readFileSync('./frontend/src/customer_handle/c_create_package_page.jsx');
 const general_create_package = require('./general_create_package.js');
+const tracking_package = require('./tracking.js');
+
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -129,9 +131,10 @@ const server = http.createServer((req, res) => {
     if(req.method === "POST"){
       general_create_package(req,res,connection);
     }
-    else{
-      res.end(general_create_package_page);
-    }
+  }
+
+  else if (req.url === "/tracking_package"){
+    tracking_package(req,res,connection);
   }
 
   else{
