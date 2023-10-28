@@ -78,7 +78,7 @@ module.exports = async function(req,res,connection){
 
             //Insert data without address_id due to CONSTRAINTS FOREIGN KEY
             const query1 = `INSERT INTO employees(employees_id, EFname, ELname, e_username, e_password, employees_ssn, location_id, e_role) VALUES(?, ?, ?, ?, ?, ?, ? , ?);`; 
-            const params1 = [employees_id, parsedData.EFName, parsedData.ELname, parsedData.e_username, parsedData.e_password, parsedData.employees_ssn, location_id, parsedData.e_role];
+            const params1 = [employees_id, parsedData.EFname, parsedData.ELname, parsedData.e_username, parsedData.e_password, parsedData.employees_ssn, location_id, parsedData.e_role];
 
             await executeQuery(connection, query1, params1);
 

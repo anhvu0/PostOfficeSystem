@@ -13,7 +13,7 @@ const c_packages = fs.readFileSync('./frontend/src/customer_handle/customer_pack
 const e_login = require('./e_login.js');
 const c_create_package = require('./c_create_package.js');
 const e_login_page = fs.readFileSync('./frontend/src/employee_handle/e_loginpage.jsx');
-const e_mainpage = fs.readFileSync('./frontend/src/main_page/e_mainpage.jsx');
+const e_mainpage_assign = require('./e_mainpage_assign.js');
 const c_create_package_page = fs.readFileSync('./frontend/src/customer_handle/c_create_package_page.jsx');
 const general_create_package = require('./general_create_package.js');
 const tracking_package = require('./tracking.js');
@@ -127,7 +127,9 @@ const server = http.createServer((req, res) => {
   }
 
   else if (req.url === "/employee_mainpage"){
-    res.end(e_mainpage);
+    if (req.method === "POST"){
+      e_mainpage_assign(req,res,connection, employeeId);
+    }
   }
 
 
