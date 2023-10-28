@@ -17,6 +17,7 @@ const e_mainpage = fs.readFileSync('./frontend/src/main_page/e_mainpage.jsx');
 const c_create_package_page = fs.readFileSync('./frontend/src/customer_handle/c_create_package_page.jsx');
 const general_create_package = require('./general_create_package.js');
 const tracking_package = require('./tracking.js');
+const e_signup = require('./e_signup.js');
 
 
 const connection = mysql.createConnection({
@@ -85,10 +86,6 @@ const server = http.createServer((req, res) => {
     if(req.method === "POST"){
       c_signup(req,res,connection);
     }
-
-    else {
-      res.end(html_c_signup)
-    }
   }
 
   else if (req.url === "/customer_packages"){
@@ -123,9 +120,16 @@ const server = http.createServer((req, res) => {
     }
   }
 
+  else if (req.url === "/employee_signup"){
+    if(req.method === "POST"){
+      e_signup(req,res,connection);
+    }
+  }
+
   else if (req.url === "/employee_mainpage"){
     res.end(e_mainpage);
   }
+
 
   else if (req.url === "/create_package"){
     if(req.method === "POST"){
@@ -136,6 +140,7 @@ const server = http.createServer((req, res) => {
   else if (req.url === "/tracking_package"){
     tracking_package(req,res,connection);
   }
+
 
   else{
     res.end(main_page);

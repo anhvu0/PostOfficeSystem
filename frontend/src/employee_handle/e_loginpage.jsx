@@ -21,10 +21,16 @@ const ELoginForm = () => {
     // Axios POST request
     await axios.post('http://localhost:3000/employee_login', loginData)
       .then((response) => {
+        console.log(response.data);
         if (response.data.status === true){
             localStorage.setItem('token', response.data.token); // store token in local storage
             alert(response.data.message);
-            navigate('/employee_mainpage'); // navigate to customer_mainpage
+            if(response.data.role === "MGR"){
+              navigate('/manager_mainpage'); // navigate to employee main page if login is successful and role is manager
+            }
+            else{
+            navigate('/employee_mainpage'); // navigate to employee main page if login is successful and role is not manager
+            }
         }
         else{
             alert("Login failed. Please try again.");

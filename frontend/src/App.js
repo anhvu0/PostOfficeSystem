@@ -11,6 +11,8 @@ import EmployeeMainPage from './main_page/e_mainpage.jsx';
 import CreatePackageForm from './customer_handle/c_create_package_page.jsx';
 import GeneralCreatePackageForm from './main_page/general_create_package_page.jsx';
 import TrackingForm from './tracking/tracking_page.jsx'
+import EmployeeRegistrationForm from './employee_handle/e_signuppage.jsx';
+import ManagerMainPage from './main_page/manager_mainpage.jsx';
 
 
 function App() {
@@ -27,6 +29,8 @@ function App() {
         <Route exact path="/customer_create_package" element={<CreatePackageForm/>} />
         <Route exact path="/create_package" element={<GeneralCreatePackageForm/>} />
         <Route exact path="/track_package" element={<TrackingForm/>} />
+        <Route exact path="/employee_signup" element={<EmployeeRegistrationForm/>} />
+        <Route exact path="/manager_mainpage" element={<ManagerMainPage/>} />
       </Routes>
     </Router>
   );
