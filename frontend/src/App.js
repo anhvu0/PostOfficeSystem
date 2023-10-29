@@ -13,6 +13,7 @@ import GeneralCreatePackageForm from './main_page/general_create_package_page.js
 import TrackingForm from './tracking/tracking_page.jsx'
 import EmployeeRegistrationForm from './employee_handle/e_signuppage.jsx';
 import ManagerMainPage from './main_page/manager_mainpage.jsx';
+import AllPackages from './employee_handle/all_packages.jsx'
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route exact path="/track_package" element={<TrackingForm/>} />
         <Route exact path="/employee_signup" element={<EmployeeRegistrationForm/>} />
         <Route exact path="/manager_mainpage" element={<ManagerMainPage/>} />
+        <Route exact path="/all_packages" element={<AllPackages/>} />
       </Routes>
     </Router>
   );

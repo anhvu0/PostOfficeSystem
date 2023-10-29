@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Card, Container } from 'react-bootstrap';
 import axios from 'axios';
+import './EmployeeMainPage.css';  // Make sure to create this CSS file
 
 const EmployeeMainPage = () => {
-    const [trackingNumber, setTrackingNumber] = useState('');
-    const [packageStatus, setPackageStatus] = useState('');  // State to store package status
+  const [trackingNumber, setTrackingNumber] = useState('');
+  const [packageStatus, setPackageStatus] = useState('');
+
 
   const handleAssign = async () => {
     const token = localStorage.getItem('token');
@@ -23,25 +25,35 @@ const EmployeeMainPage = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h1>Welcome Back</h1>
-      <div className="mb-4">
-        <Button variant="primary" as={Link} to={"/packages"}>Click here to check for existing packages in all system</Button>
-      </div>
+    <Container className="mt-5">
+    <Card className="mb-4 p-4 shadow">
+      <Card.Title><h1>Welcome Back</h1></Card.Title>
+      <Card.Text>
+        You can check the system's existing packages or update the status of a package.
+      </Card.Text>
+      <Button variant="primary" as={Link} to={"/all_packages"} className="mb-4">Check for Existing Packages</Button>
+    </Card>
 
+    <Card className="p-4 shadow">
       <Form.Group className="mb-4">
         <Form.Label>Enter Tracking Number</Form.Label>
         <Form.Control type="number" placeholder="Tracking Number" value={trackingNumber} onChange={(e) => setTrackingNumber(e.target.value)} />
       </Form.Group>
 
       <Form.Group className="mb-4">
-        <Form.Label>Enter Package Status</Form.Label>
-        <Form.Control type="text" placeholder="Package Status" value={packageStatus} onChange={(e) => setPackageStatus(e.target.value)} />
+        <Form.Label>Select Package Status</Form.Label>
+        <Form.Select value={packageStatus} onChange={(e) => setPackageStatus(e.target.value)}>
+          <option value="" disabled>Select a status</option>
+          <option value="Received">Received</option>
+          <option value="In Transit">In Transit</option>
+          <option value="Delivered">Delivered</option>
+        </Form.Select>
       </Form.Group>
 
       <Button variant="success" onClick={handleAssign}>Assign</Button>
-    </div>
-  );
+    </Card>
+  </Container>
+);
 }
 
 export default EmployeeMainPage;

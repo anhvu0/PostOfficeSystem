@@ -10,3 +10,8 @@
     border-collapse: separate;
     border-spacing: 0 15px;
   }
+
+  th, td {
+    padding-left: 20px;
+    padding-right: 20px;
+  }

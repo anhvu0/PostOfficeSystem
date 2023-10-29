@@ -12,6 +12,9 @@ const EmployeeMainPage = () => {
             <div>
                 <Button variant="primary" as={Link} to={"/employee_signup"}>Click here to sign up a new employee</Button>
             </div>
+            <div>
+                <Button variant="primary" as={Link} to={"/employee_mainpage"}>View as an employee</Button>
+            </div>
         </div>
     );
 }

@@ -18,6 +18,7 @@ const c_create_package_page = fs.readFileSync('./frontend/src/customer_handle/c_
 const general_create_package = require('./general_create_package.js');
 const tracking_package = require('./tracking.js');
 const e_signup = require('./e_signup.js');
+const all_packages = require('./all_packages.js');
 
 
 const connection = mysql.createConnection({
@@ -141,6 +142,10 @@ const server = http.createServer((req, res) => {
 
   else if (req.url === "/tracking_package"){
     tracking_package(req,res,connection);
+  }
+
+  else if(req.url === "/all_packages"){
+    all_packages(req,res,connection);
   }
 
 
