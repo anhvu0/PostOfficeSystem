@@ -29,7 +29,10 @@ const DataTable = () => {
             <th>Package ID</th>
             <th>Sender</th>
             <th>Receiver</th>
+            <th>From Address</th> {/* New column */}
+            <th>To Address</th> {/* New column */}
             <th>Status</th>
+            <th>Employee Handle ID</th> {/* New column */}
           </tr>
         </thead>
         <tbody>
@@ -38,7 +41,10 @@ const DataTable = () => {
               <td>{row.packages_id}</td>
               <td>{row.sender}</td>
               <td>{row.receiver}</td>
+              <td>{row.from_address}</td> {/* New column */}
+              <td>{row.to_address}</td> {/* New column */}
               <td>{row.package_status}</td>
+              <td>{row.employees_handle_id}</td> {/* New column */}
             </tr>
           ))}
         </tbody>
