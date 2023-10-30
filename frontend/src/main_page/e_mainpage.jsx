@@ -81,6 +81,7 @@ const EmployeeMainPage = () => {
         <Button variant="info" className="mt-2" onClick={handleInHour}>Log In Hour</Button>
         <Button variant="warning" className="mt-2 ms-3" onClick={handleOuthour}>Log Out Hour</Button>
     </Card>
+    <Button variant="primary" as={Link} to={"/employee_check_working_hours"} className="mb-4">Check for your hours in the most recent 32 days</Button>
   </Container>
   );
 }
