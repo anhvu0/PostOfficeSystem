@@ -14,6 +14,7 @@ import TrackingForm from './tracking/tracking_page.jsx'
 import EmployeeRegistrationForm from './employee_handle/e_signuppage.jsx';
 import ManagerMainPage from './main_page/manager_mainpage.jsx';
 import AllPackages from './employee_handle/all_packages.jsx'
+import ManagerEmployeeHour from './employee_handle/manager_employee_hour.jsx'; 
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/employee_signup" element={<EmployeeRegistrationForm/>} />
         <Route exact path="/manager_mainpage" element={<ManagerMainPage/>} />
         <Route exact path="/all_packages" element={<AllPackages/>} />
+        <Route exact path="/manager_check_working_hours" element={<ManagerEmployeeHour/>} />
       </Routes>
     </Router>
   );

@@ -19,6 +19,10 @@ const general_create_package = require('./general_create_package.js');
 const tracking_package = require('./tracking.js');
 const e_signup = require('./e_signup.js');
 const all_packages = require('./all_packages.js');
+const employee_in_hour = require('./employee_in_hour.js');
+const employee_out_hour = require('./employee_out_hour.js');
+const employee_check_working_hours = require('./check_working_hours.js');
+const manager_check_working_hours = require('./manager_working_hours.js');
 
 
 const connection = mysql.createConnection({
@@ -148,6 +152,23 @@ const server = http.createServer((req, res) => {
     all_packages(req,res,connection);
   }
 
+  else if(req.url === "/in_hour"){
+    employee_in_hour(req,res,connection, employeeId);
+  }
+
+  else if(req.url === "/out_hour"){
+    employee_out_hour(req,res,connection, employeeId);
+  }
+
+  else if(req.url === "/employee_check_working_hours"){
+    employee_check_working_hours(req,res,connection, employeeId);
+  }
+
+  else if(req.url === "/manager_check_working_hours"){
+    if (req.method === "POST"){
+      manager_check_working_hours(req,res,connection);
+    }
+  }
 
   else{
     res.end(main_page);
