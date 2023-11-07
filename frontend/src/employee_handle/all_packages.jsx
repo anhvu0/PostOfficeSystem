@@ -8,7 +8,7 @@ const AllPackages = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/all_packages');
+        const response = await axios.get('http://52.14.150.221:3000/all_packages');
         if(!response.data.message){
             setTableData(response.data);
         }

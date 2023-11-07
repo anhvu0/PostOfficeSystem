@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from 'react-redux';
 
 const ELoginForm = () => {
 
-    const navigate = useNavigate(); // useNavigate hook to navigate to other pages
+  const navigate = useNavigate(); // useNavigate hook to navigate to other pages
+  const dispatch = useDispatch();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -19,11 +20,12 @@ const ELoginForm = () => {
     };
 
     // Axios POST request
-    await axios.post('http://localhost:3000/employee_login', loginData)
+    await axios.post('http://52.14.150.221:3000/employee_login', loginData)
       .then((response) => {
         console.log(response.data);
         if (response.data.status === true){
-            localStorage.setItem('token', response.data.token); // store token in local storage
+            sessionStorage.setItem('token', response.data.token); // store token in local storage
+	    dispatch({type: 'SET_TOKEN', payload: response.data.token});
             alert(response.data.message);
             if(response.data.role === "MGR"){
               navigate('/manager_mainpage'); // navigate to employee main page if login is successful and role is manager

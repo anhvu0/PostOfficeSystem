@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import { FaUser, FaUserPlus, FaUserTie, FaBoxOpen, FaSearch } from "react-icons/fa"; // import icons
+import moment from 'moment-timezone';
 
 const MainPage = () => {
+    const fullDateTime = moment.tz("America/Chicago").format();
+    console.log(fullDateTime); // This will give you a complete timestamp.
     return (
         <div className="d-flex flex-column align-items-center vh-100 justify-content-center bg-secondary text-white">
             <h1 className="mb-4 display-3 font-weight-bold">Post Office System</h1>

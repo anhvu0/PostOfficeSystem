@@ -19,22 +19,31 @@ const general_create_package = require('./general_create_package.js');
 const tracking_package = require('./tracking.js');
 const e_signup = require('./e_signup.js');
 const all_packages = require('./all_packages.js');
+const employee_in_hour = require('./employee_in_hour.js');
+const employee_out_hour = require('./employee_out_hour.js');
+const employee_check_working_hours = require('./check_working_hours.js');
+const manager_check_working_hours = require('./manager_working_hours.js');
+const all_employee = require('./all_employee.js')
 
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Vietnamese123',
-  database: 'PostOffice'
+
+const connection = mysql.createPool({
+  host: 'database-1.cwisjg5sk6u4.us-east-2.rds.amazonaws.com',
+  user: 'admin',
+  password: '12345678',
+  database: 'postofficesys',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 // connect to the MySQL database
-connection.connect((error) => {
-if (error) {
-  console.error('Error connecting to MySQL database:', error);
-} else {
-  console.log('Connected to MySQL database!');
-}
-});
+//connection.connect((error) => {
+//if (error) {
+ // console.error('Error connecting to MySQL database:', error);
+//} else {
+ // console.log('Connected to MySQL database!');
+//}
+//});
 // close the MySQL connection
 // connection.end();
 
@@ -148,6 +157,27 @@ const server = http.createServer((req, res) => {
     all_packages(req,res,connection);
   }
 
+  else if(req.url === "/in_hour"){
+    employee_in_hour(req,res,connection, employeeId);
+  }
+
+  else if(req.url === "/out_hour"){
+    employee_out_hour(req,res,connection, employeeId);
+  }
+
+  else if(req.url === "/employee_check_working_hours"){
+    employee_check_working_hours(req,res,connection, employeeId);
+  }
+
+  else if(req.url === "/manager_check_working_hours"){
+    if (req.method === "POST"){
+      manager_check_working_hours(req,res,connection);
+    }
+  }
+
+  else if(req.url === "/all_employee"){
+    all_employee(req,res,connection);
+  }
 
   else{
     res.end(main_page);
