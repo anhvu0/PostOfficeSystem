@@ -30,7 +30,7 @@ const RegistrationForm = () => {
       zip_code: zipCode
     };
 
-    axios.post('http://localhost:3000/customer_signup', registrationData)
+    axios.post('http://52.14.150.221:3000/customer_signup', registrationData)
       .then((response) => {
         alert(response.data.message);
         navigate('/');

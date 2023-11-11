@@ -1,6 +1,9 @@
 module.exports = function(req, res, connection, employeeId) {
-    const currentDate = new Date().toISOString().slice(0, 10); // gives yyyy-mm-dd
-    const currentTime = new Date().toTimeString().split(' ')[0]; // gives hh:mm:ss
+    const moment = require('moment-timezone');
+    const currentDate = moment.tz("America/Chicago").format('YYYY-MM-DD');
+
+    const currentTime = moment.tz("America/Chicago").format('HH:mm:ss');	
+   
     let query = 'INSERT INTO workhours(employees_id, working_date, in_hour) VALUES(?, ?, ?)';
     const params = [employeeId, currentDate, currentTime];
     connection.query(query, params, (err, result) => {

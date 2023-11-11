@@ -40,7 +40,7 @@ const GeneralCreatePackageForm = () => {
         receive_l_name
     };
 
-    axios.post('http://localhost:3000/create_package', createPackageData)
+    axios.post('http://52.14.150.221:3000/create_package', createPackageData)
       .then((response) => {
         console.log(response.data);
         alert(response.data.message);

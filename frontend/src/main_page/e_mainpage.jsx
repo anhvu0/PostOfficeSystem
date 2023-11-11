@@ -8,7 +8,7 @@ const EmployeeMainPage = () => {
   const [trackingNumber, setTrackingNumber] = useState('');
   const [packageStatus, setPackageStatus] = useState('');
 
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   const handleAssign = async () => {
     const payload = {
         trackingNumber,
@@ -16,7 +16,7 @@ const EmployeeMainPage = () => {
     };
     
     try {
-        const response = await axios.post('http://localhost:3000/employee_mainpage', payload, { headers: { 'Authorization': `Bearer ${token}` }});
+        const response = await axios.post('http://52.14.150.221:3000/employee_mainpage', payload, { headers: { 'Authorization': `Bearer ${token}` }});
         alert(response.data.message);
     } catch (error) {
         console.error('There was an error with the assignment:', error);
@@ -25,7 +25,7 @@ const EmployeeMainPage = () => {
 
   const handleInHour = async () => {
     try{
-      const response = await axios.get('http://localhost:3000/in_hour',{headers : {'Authorization': `Bearer ${token}`}});
+      const response = await axios.get('http://52.14.150.221:3000/in_hour',{headers : {'Authorization': `Bearer ${token}`}});
       alert(response.data.message);
     }
     catch (error) {
@@ -35,7 +35,7 @@ const EmployeeMainPage = () => {
 
   const handleOuthour = async () => {
     try{
-      const response = await axios.get('http://localhost:3000/out_hour',{headers : {'Authorization': `Bearer ${token}`}});
+      const response = await axios.get('http://52.14.150.221:3000/out_hour',{headers : {'Authorization': `Bearer ${token}`}});
       alert(response.data.message);
     }
     catch (error) {

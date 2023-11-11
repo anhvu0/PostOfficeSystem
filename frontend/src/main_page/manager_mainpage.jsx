@@ -15,6 +15,9 @@ const EmployeeMainPage = () => {
             <div>
                 <Button variant="primary" as={Link} to={"/manager_check_working_hours"}>Check an employee's working hours in the most recent 365 days</Button>
             </div>
+	    <div>
+                <Button variant="primary" as={Link} to={"/all_employee"}>Check for information of all employees</Button>
+            </div>
         </div>
     );
 }

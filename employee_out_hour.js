@@ -1,7 +1,9 @@
 module.exports = function(req, res, connection, employeeId) {
-    const currentDate = new Date().toISOString().slice(0, 10); // gives yyyy-mm-dd
-    const currentTime = new Date().toTimeString().split(' ')[0]; // gives hh:mm:ss
-    
+   const moment = require('moment-timezone');
+   const currentDate = moment.tz("America/Chicago").format('YYYY-MM-DD');
+
+   const currentTime = moment.tz("America/Chicago").format('HH:mm:ss');
+
     // First, get the in_hour for the employee for today
     let inHourQuery = 'SELECT in_hour FROM workhours WHERE employees_id = ? AND working_date = ?';
     let inHourParams = [employeeId, currentDate];
@@ -10,17 +12,23 @@ module.exports = function(req, res, connection, employeeId) {
         if (err) throw err;
 
         if (result.length > 0) {
-            let inHour = result[0].in_hour;
+            let inHour = result[result.length - 1].in_hour;
+
+console.log('In Hour:', inHour);
+console.log('Current Time:', currentTime);
+console.log('Employee ID:', employeeId);
+console.log('Current Date:', currentDate);
+
 
             // Then perform the update
             let updateQuery = `
                 UPDATE workhours
                 SET out_hour = ?, 
                     total_hour = TIME_TO_SEC(TIMEDIFF(?, ?)) / 3600
-                WHERE employees_id = ? AND working_date = ?
+                WHERE employees_id = ? AND working_date = ? AND in_hour = ?;
             `;
 
-            let updateParams = [currentTime, currentTime, inHour, employeeId, currentDate];
+            let updateParams = [currentTime, currentTime, inHour, employeeId, currentDate, inHour];
 
             connection.query(updateQuery, updateParams, (err, result) => {
                 if (err) throw err;

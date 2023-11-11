@@ -23,22 +23,28 @@ const employee_in_hour = require('./employee_in_hour.js');
 const employee_out_hour = require('./employee_out_hour.js');
 const employee_check_working_hours = require('./check_working_hours.js');
 const manager_check_working_hours = require('./manager_working_hours.js');
+const all_employee = require('./all_employee.js')
+const delete_employee = require('./delete_employee.js');
 
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'Vietnamese123',
-  database: 'PostOffice'
+
+const connection = mysql.createPool({
+  host: 'database-1.cwisjg5sk6u4.us-east-2.rds.amazonaws.com',
+  user: 'admin',
+  password: '12345678',
+  database: 'postofficesys',
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0
 });
 // connect to the MySQL database
-connection.connect((error) => {
-if (error) {
-  console.error('Error connecting to MySQL database:', error);
-} else {
-  console.log('Connected to MySQL database!');
-}
-});
+//connection.connect((error) => {
+//if (error) {
+ // console.error('Error connecting to MySQL database:', error);
+//} else {
+ // console.log('Connected to MySQL database!');
+//}
+//});
 // close the MySQL connection
 // connection.end();
 
@@ -168,6 +174,14 @@ const server = http.createServer((req, res) => {
     if (req.method === "POST"){
       manager_check_working_hours(req,res,connection);
     }
+  }
+
+  else if(req.url.startsWith("/all_employee")) {
+    all_employee(req, res, connection);
+  }
+  
+  else if(req.url.startsWith("/delete_employee/") && req.method == "DELETE"){
+    delete_employee(req,res,connection)
   }
 
   else{
