@@ -20,7 +20,7 @@ const LoginForm = () => {
     };
 
     // Axios POST request
-    await axios.post('http://52.14.150.221:3000/customer_login', loginData)
+    await axios.post('http://localhost:3000/customer_login', loginData)
       .then((response) => {
         if (response.data.status === true){
           // Use sessionStorage instead of localStorage

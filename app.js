@@ -28,10 +28,10 @@ const all_employee = require('./all_employee.js')
 
 
 const connection = mysql.createPool({
-  host: 'database-1.cwisjg5sk6u4.us-east-2.rds.amazonaws.com',
-  user: 'admin',
-  password: '12345678',
-  database: 'postofficesys',
+  host: 'localhost',
+  user: 'root',
+  password: 'password',
+  database: 'postoffice',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0

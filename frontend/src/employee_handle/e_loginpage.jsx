@@ -20,7 +20,7 @@ const ELoginForm = () => {
     };
 
     // Axios POST request
-    await axios.post('http://52.14.150.221:3000/employee_login', loginData)
+    await axios.post('http://localhost:3000/employee_login', loginData)
       .then((response) => {
         console.log(response.data);
         if (response.data.status === true){

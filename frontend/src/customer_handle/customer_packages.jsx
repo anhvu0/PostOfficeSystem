@@ -9,7 +9,7 @@ const DataTable = () => {
     const fetchData = async () => {
       try {
         const token = sessionStorage.getItem('token');
-        const response = await axios.get('http://52.14.150.221:3000/customer_packages', {headers : {'Authorization': `Bearer ${token}`}})
+        const response = await axios.get('http://localhost:3000/customer_packages', {headers : {'Authorization': `Bearer ${token}`}})
         if(!response.data.message){
             setTableData(response.data);
         }

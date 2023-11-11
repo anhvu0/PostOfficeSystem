@@ -37,7 +37,7 @@ const CreatePackageForm = () => {
     };
 
     const token = sessionStorage.getItem('token'); //This is where you get the token from localStorage
-    axios.post('http://52.14.150.221:3000/customer_create_package', createPackageData, {headers : {'Authorization': `Bearer ${token}`}})
+    axios.post('http://localhost:3000/customer_create_package', createPackageData, {headers : {'Authorization': `Bearer ${token}`}})
       .then((response) => {
         console.log(response.data);
         alert(response.data.message);

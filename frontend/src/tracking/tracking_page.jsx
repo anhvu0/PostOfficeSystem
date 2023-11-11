@@ -12,7 +12,7 @@ const TrackingForm = () => {
       packages_id
     };
 
-    axios.post('http://52.14.150.221:3000/tracking_package', trackingnumber)
+    axios.post('http://localhost:3000/tracking_package', trackingnumber)
       .then((response) => {
         console.log("API Response:", response.data);  // Debugging line
         if (Array.isArray(response.data)) {

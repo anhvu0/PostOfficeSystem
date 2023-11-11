@@ -13,7 +13,7 @@ const ManagerEmployeeHour = () => {
         };
         
         try {
-            const response = await axios.post('/http://52.14.150.221:3000/manager_check_working_hours', employeeId, { headers: { 'Authorization': `Bearer ${token}` }});
+            const response = await axios.post('/http://localhost:3000/manager_check_working_hours', employeeId, { headers: { 'Authorization': `Bearer ${token}` }});
             if(!response.data.message){
                 setWorkHours(response.data);
             }

@@ -10,7 +10,7 @@ const GetEmployeeHour = () => {
       const token = sessionStorage.getItem('token');
       
       try {
-        const response = await axios.get('http://52.14.150.221:3000/employee_check_working_hours', { headers: { 'Authorization': `Bearer ${token}` }});
+        const response = await axios.get('http://localhost:3000/employee_check_working_hours', { headers: { 'Authorization': `Bearer ${token}` }});
         
         if (!response.data.message) {
           setWorkHours(response.data);
