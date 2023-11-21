@@ -1,12 +1,14 @@
 
 const http = require('http');
 const fs = require('fs');
-const mysql = require('mysql2');
+require('dotenv').config();
+const connection = require('./mysql_connection.js')
 const c_login = require('./c_login.js');
 const c_signup = require('./c_signup.js');
 const c_login_page = fs.readFileSync('./frontend/src/customer_handle/loginpage.jsx');
 const jwt = require('jsonwebtoken');
 const customer_packages = require('./customer_packages.js');
+const delete_packages = require('./delete_packages.js')
 const main_page = fs.readFileSync('./frontend/src/main_page/mainpage.jsx');
 const c_mainpage = fs.readFileSync('./frontend/src/main_page/c_mainpage.jsx'); //Files like this doesnt have to be included since they are handled in App.js already
 const c_packages = fs.readFileSync('./frontend/src/customer_handle/customer_packages.jsx');
@@ -24,18 +26,12 @@ const employee_out_hour = require('./employee_out_hour.js');
 const employee_check_working_hours = require('./check_working_hours.js');
 const manager_check_working_hours = require('./manager_working_hours.js');
 const all_employee = require('./all_employee.js')
+const delete_employee = require('./delete_employee.js');
+const sendNotificationEmail = require('./email_handle.js')
+const getLocations = require('./get_location.js')
+const { checkShouldClockOut } = require('./clock_out_checker.js');
 
 
-
-const connection = mysql.createPool({
-  host: 'database-1.cwisjg5sk6u4.us-east-2.rds.amazonaws.com',
-  user: 'admin',
-  password: '12345678',
-  database: 'postofficesys',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
 // connect to the MySQL database
 //connection.connect((error) => {
 //if (error) {
@@ -98,14 +94,12 @@ const server = http.createServer((req, res) => {
     }
   }
 
-  else if (req.url === "/customer_packages"){
-    if(req.method === "GET"){
-      customer_packages(req,res,connection, customerId);
-    }
+  else if (req.url.startsWith("/customer_packages")) {
+    customer_packages(req, res, connection, customerId);
+  }
 
-    else {
-      res.end(c_packages);
-    }
+  else if (req.method == "DELETE" && req.url.startsWith("/delete_packages/")) {
+    delete_packages(req, res, connection);
   }
 
   else if (req.url === "/customer_create_package"){
@@ -115,6 +109,10 @@ const server = http.createServer((req, res) => {
     else {
       res.end(c_create_package_page);
     }
+  }
+
+  else if (req.url === '/get_locations' && req.method === 'GET') {
+    getLocations(req, res, connection);
   }
 
   else if (req.url === "/customer_mainpage"){
@@ -139,7 +137,12 @@ const server = http.createServer((req, res) => {
   else if (req.url === "/employee_mainpage"){
     if (req.method === "POST"){
       e_mainpage_assign(req,res,connection, employeeId);
+      sendNotificationEmail()
     }
+  }
+
+  else if(req.url === "/check_clock_out" && req.method == "GET") {
+    checkShouldClockOut(req, res, connection, employeeId);
   }
 
 
@@ -153,7 +156,7 @@ const server = http.createServer((req, res) => {
     tracking_package(req,res,connection);
   }
 
-  else if(req.url === "/all_packages"){
+  else if(req.url.startsWith("/all_packages")){
     all_packages(req,res,connection);
   }
 
@@ -175,8 +178,12 @@ const server = http.createServer((req, res) => {
     }
   }
 
-  else if(req.url === "/all_employee"){
-    all_employee(req,res,connection);
+  else if(req.url.startsWith("/all_employee")) {
+    all_employee(req, res, connection);
+  }
+  
+  else if(req.url.startsWith("/delete_employee/") && req.method == "DELETE"){
+    delete_employee(req,res,connection)
   }
 
   else{

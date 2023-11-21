@@ -6,6 +6,7 @@ const EmployeeMainPage = () => {
     return (
         <div>
             <h1>Welcome Back</h1>
+            <h3>To log out, just close the tab</h3>
             <div>
                 <Button variant="primary" as={Link} to={"/employee_signup"}>Click here to sign up a new employee</Button>
             </div>

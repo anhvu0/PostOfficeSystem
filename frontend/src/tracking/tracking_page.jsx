@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+
 const TrackingForm = () => {
 
   const [packages_id, setPackageId] = useState('');
@@ -12,7 +13,7 @@ const TrackingForm = () => {
       packages_id
     };
 
-    axios.post('http://52.14.150.221:3000/tracking_package', trackingnumber)
+    axios.post(`${process.env.REACT_APP_SERVER}/tracking_package`, trackingnumber)
       .then((response) => {
         console.log("API Response:", response.data);  // Debugging line
         if (Array.isArray(response.data)) {

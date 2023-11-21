@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { Button } from 'react-bootstrap';
+
 
 const EmployeeRegistrationForm = () => {
 
@@ -26,7 +29,7 @@ const EmployeeRegistrationForm = () => {
       e_role
     };
 
-    axios.post('http://52.14.150.221:3000/employee_signup', registrationData)
+    axios.post(`${process.env.REACT_APP_SERVER}/employee_signup`, registrationData)
       .then((response) => {
         alert(response.data.message);
         navigate('/');
@@ -37,6 +40,8 @@ const EmployeeRegistrationForm = () => {
   };
 
   return (
+    <>
+    <Button variant="primary" as={Link} to={"/manager_mainpage"}>Return to manager mainpage</Button>
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
@@ -86,6 +91,7 @@ const EmployeeRegistrationForm = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

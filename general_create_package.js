@@ -125,10 +125,30 @@ module.exports = function (req,res,connection){
             // sender_l_name = result[0].Lname;
 
             //Now inserting the data after checking. No need to check for customer_id because the customer already logged in. Not add a store.
-            const query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
-                            receive_f_name, receive_l_name, package_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
-            const params1 = [parsedData.weight, price, packages_id, null, address_from_id, address_to_id, location_id, parsedData.send_f_name, parsedData.send_l_name, 
-                            parsedData.receive_f_name, parsedData.receive_l_name , "just created"];
+            if (parsedData.send_email && pasedData.receive_email){
+                const query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
+                                receive_f_name, receive_l_name, package_status, send_email, receive_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
+                const params1 = [parsedData.weight, price, packages_id, null, address_from_id, address_to_id, location_id, parsedData.send_f_name, parsedData.send_l_name, 
+                                parsedData.receive_f_name, parsedData.receive_l_name , "just created", parsedData.send_email, parsedData.receive_email];
+                }
+            else if(!parsedData.send_email && !parsedData.receive_email){
+                const query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
+                    receive_f_name, receive_l_name, package_status, send_email, receive_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
+                const params1 = [parsedData.weight, price, packages_id, null, address_from_id, address_to_id, location_id, parsedData.send_f_name, parsedData.send_l_name, 
+                    parsedData.receive_f_name, parsedData.receive_l_name , "just created", null, null];
+            }
+            else if(parsedData.send_email && !parsedData.receive_email){
+                const query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
+                    receive_f_name, receive_l_name, package_status, send_email, receive_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
+                const params1 = [parsedData.weight, price, packages_id, null, address_from_id, address_to_id, location_id, parsedData.send_f_name, parsedData.send_l_name, 
+                    parsedData.receive_f_name, parsedData.receive_l_name , "just created", parsedData.send_email, null];
+            }
+            else if(!parsedData.send_email && parsedData.receive_email){
+                const query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
+                    receive_f_name, receive_l_name, package_status, send_email, receive_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
+                const params1 = [parsedData.weight, price, packages_id, null, address_from_id, address_to_id, location_id, parsedData.send_f_name, parsedData.send_l_name, 
+                    parsedData.receive_f_name, parsedData.receive_l_name , "just created", null, parsedData.receive_email];
+            }
 
             await executeQuery(connection, query1, params1);
 

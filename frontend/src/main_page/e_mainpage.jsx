@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { Button, Form, Card, Container } from 'react-bootstrap';
 import axios from 'axios';
 import './EmployeeMainPage.css';  // Make sure to create this CSS file
+
 
 const EmployeeMainPage = () => {
   const [trackingNumber, setTrackingNumber] = useState('');
@@ -16,7 +17,7 @@ const EmployeeMainPage = () => {
     };
     
     try {
-        const response = await axios.post('http://52.14.150.221:3000/employee_mainpage', payload, { headers: { 'Authorization': `Bearer ${token}` }});
+        const response = await axios.post(`${process.env.REACT_APP_SERVER}/employee_mainpage`, payload, { headers: { 'Authorization': `Bearer ${token}` }});
         alert(response.data.message);
     } catch (error) {
         console.error('There was an error with the assignment:', error);
@@ -25,7 +26,7 @@ const EmployeeMainPage = () => {
 
   const handleInHour = async () => {
     try{
-      const response = await axios.get('http://52.14.150.221:3000/in_hour',{headers : {'Authorization': `Bearer ${token}`}});
+      const response = await axios.get(`${process.env.REACT_APP_SERVER}/in_hour`,{headers : {'Authorization': `Bearer ${token}`}});
       alert(response.data.message);
     }
     catch (error) {
@@ -35,7 +36,7 @@ const EmployeeMainPage = () => {
 
   const handleOuthour = async () => {
     try{
-      const response = await axios.get('http://52.14.150.221:3000/out_hour',{headers : {'Authorization': `Bearer ${token}`}});
+      const response = await axios.get(`${process.env.REACT_APP_SERVER}/out_hour`,{headers : {'Authorization': `Bearer ${token}`}});
       alert(response.data.message);
     }
     catch (error) {
@@ -43,12 +44,32 @@ const EmployeeMainPage = () => {
     }
   };
 
+  const pollClockOut = useCallback(async () => {
+    console.log('Polling for clock out status...'); // Debug line
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_SERVER}/check_clock_out`, { headers: { 'Authorization': `Bearer ${token}` } });
+      console.log('Response from /check_clock_out:', response.data); // Debug line
+      if (response.data.shouldClockOut) {
+        alert('Please clock out now. It is almost 8 hours');
+      }
+    } catch (error) {
+      console.error('There was an error with the clock out check: ', error);
+    }
+  }, [token]); // token is a dependency here
+
+  useEffect(() => {
+    const intervalId = setInterval(pollClockOut, 300000); // Poll every 5 minutes
+    return () => clearInterval(intervalId);
+  }, [pollClockOut]); // pollClockOut is now a dependency
+
   const getCurrentDate = () => {
     const today = new Date();
     return today.toDateString(); // You can adjust the formatting as needed
   };
 
   return (
+    <div>
+      <h3>To log out, just close the tab</h3>
     <Container className="mt-5">
     <Card className="mb-4 p-4 shadow">
       <Card.Title><h1>Welcome Back</h1></Card.Title>
@@ -83,6 +104,7 @@ const EmployeeMainPage = () => {
     </Card>
     <Button variant="primary" as={Link} to={"/employee_check_working_hours"} className="mb-4">Check for your hours in the most recent 32 days</Button>
   </Container>
+  </div>
   );
 }
 

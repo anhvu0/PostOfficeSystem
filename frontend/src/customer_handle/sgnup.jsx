@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { Button } from 'react-bootstrap';
 
 const RegistrationForm = () => {
 
@@ -15,6 +17,7 @@ const RegistrationForm = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [zipCode, setZipCode] = useState('');
+  const [email , setEmail] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,10 +30,11 @@ const RegistrationForm = () => {
       street_address: streetAddress,
       city,
       state,
-      zip_code: zipCode
+      zip_code: zipCode,
+      email
     };
 
-    axios.post('http://52.14.150.221:3000/customer_signup', registrationData)
+    axios.post(`${process.env.REACT_APP_SERVER}/customer_signup`, registrationData)
       .then((response) => {
         alert(response.data.message);
         navigate('/');
@@ -41,6 +45,8 @@ const RegistrationForm = () => {
   };
 
   return (
+    <>
+    <Button variant="primary" as={Link} to={"/"}>Return to home</Button>
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6"> {/* Increased width for better layout */}
@@ -87,7 +93,10 @@ const RegistrationForm = () => {
                   <label htmlFor="zipCode">Zip Code</label>
                   <input type="text" className="form-control" id="zipCode" placeholder="Zip Code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} required />
                 </div>
-
+                <div className="form-group">
+                  <label htmlFor="email">Email</label>
+                  <input type="text" className="form-control" id="email" placeholder="Email (not required but suggested for notifications)" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
                 <input type="submit" className="btn btn-primary btn-block" value="Register" />
               </form>
             </div>
@@ -95,6 +104,7 @@ const RegistrationForm = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

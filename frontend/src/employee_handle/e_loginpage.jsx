@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+
 const ELoginForm = () => {
 
   const navigate = useNavigate(); // useNavigate hook to navigate to other pages
@@ -20,7 +21,7 @@ const ELoginForm = () => {
     };
 
     // Axios POST request
-    await axios.post('http://52.14.150.221:3000/employee_login', loginData)
+    await axios.post(`${process.env.REACT_APP_SERVER}/employee_login`, loginData)
       .then((response) => {
         console.log(response.data);
         if (response.data.status === true){

@@ -81,9 +81,18 @@ module.exports = async function(req,res,connection){
                 }
             }
 
+            let query1 = ''
+            let params1=[]
+
             //Insert data without address_id due to CONSTRAINTS FOREIGN KEY
-            const query1 = `INSERT INTO customers(customers_id, Fname, Lname, c_username, c_password, dob) VALUES(?, ?, ?, ?, ?, ?);`; 
-            const params1 = [customer_id, parsedData.first_name, parsedData.last_name, parsedData.username, parsedData.password, parsedData.date_of_birth];
+            if (parsedData.email){
+                query1 = `INSERT INTO customers(customers_id, Fname, Lname, c_username, c_password, dob, c_Email) VALUES(?, ?, ?, ?, ?, ?, ?);`; 
+                params1 = [customer_id, parsedData.first_name, parsedData.last_name, parsedData.username, parsedData.password, parsedData.date_of_birth, parsedData.email];
+            }
+            else{
+                query1 = `INSERT INTO customers(customers_id, Fname, Lname, c_username, c_password, dob, c_Email) VALUES(?, ?, ?, ?, ?, ?, ?);`; 
+                params1 = [customer_id, parsedData.first_name, parsedData.last_name, parsedData.username, parsedData.password, parsedData.date_of_birth, null];
+            }
 
             await executeQuery(connection, query1, params1);
 

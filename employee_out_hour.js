@@ -14,11 +14,6 @@ module.exports = function(req, res, connection, employeeId) {
         if (result.length > 0) {
             let inHour = result[result.length - 1].in_hour;
 
-console.log('In Hour:', inHour);
-console.log('Current Time:', currentTime);
-console.log('Employee ID:', employeeId);
-console.log('Current Date:', currentDate);
-
 
             // Then perform the update
             let updateQuery = `

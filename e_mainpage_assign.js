@@ -1,3 +1,4 @@
+
 module.exports = function(req, res, connection, employeeId) {
     let jsonString = '';
     
@@ -31,4 +32,5 @@ module.exports = function(req, res, connection, employeeId) {
             res.end(JSON.stringify({ message: 'An error occurred.' }));
         }
     });
+
 };

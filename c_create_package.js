@@ -118,17 +118,28 @@ module.exports = function (req,res,connection,customerId){
             //Now query to get the sender's Fname and Lname based on the customers_id from the token
             let sender_f_name;
             let sender_l_name;
-            const query0 = 'SELECT Fname, Lname FROM customers WHERE customers_id = ?';
+            const query0 = 'SELECT Fname, Lname, c_Email FROM customers WHERE customers_id = ?';
             const params0 = [customerId];
             result = await executeQuery(connection, query0, params0);
             sender_f_name = result[0].Fname;
             sender_l_name = result[0].Lname;
+            send_email = result[0].send_email;
 
             //Now inserting the data after checking. No need to check for customer_id because the customer already logged in. Not add a store.
-            const query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
-                            receive_f_name, receive_l_name, package_status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
-            const params1 = [parsedData.weight, price, packages_id, customerId, address_from_id, address_to_id, location_id, sender_f_name, sender_l_name, 
-                            parsedData.receive_f_name, parsedData.receive_l_name , "just created"];
+            let query1 = '';
+            let params1 = [];
+            if(parsedData.receive_email){
+                 query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
+                                receive_f_name, receive_l_name, package_status, send_email, receive_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
+                 params1 = [parsedData.weight, price, packages_id, customerId, address_from_id, address_to_id, location_id, sender_f_name, sender_l_name, 
+                                parsedData.receive_f_name, parsedData.receive_l_name , "just created", send_email, parsedData.receive_email];
+                }
+            else {
+                 query1 = `INSERT INTO packages(weight, price, packages_id, customers_send_id, address_from_id, address_to_id, location_id, send_f_name, send_l_name,
+                    receive_f_name, receive_l_name, package_status, send_email) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`; 
+                 params1 = [parsedData.weight, price, packages_id, customerId, address_from_id, address_to_id, location_id, sender_f_name, sender_l_name, 
+                    parsedData.receive_f_name, parsedData.receive_l_name , "just created", send_email, null];
+            }
 
             await executeQuery(connection, query1, params1);
 
